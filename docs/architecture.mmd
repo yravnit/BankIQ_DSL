@@ -1,0 +1,13 @@
+flowchart TD
+    A["Preflight: validate catalog, validator, renderer;<br>build 54 dev + 17 holdout cases (no LLM)"] --> B["User describes a rule in plain English"]
+    B --> C{"Privacy gate"}
+    C -->|"sensitive identifier (e.g. PAN)"| F["Refuse — never reaches the model"]
+    C -->|"pass"| D["Build prompt from catalog"]
+    D --> E["LLM returns typed IR JSON<br>(NIM or local llama-server)"]
+    E --> V["Validate IR: schema, then catalog rules"]
+    V -->|"invalid"| M["Counted as model failure"]
+    V -->|"valid"| O{"outcome?"}
+    O -->|"ready"| R["Render candidate DSL (fixed templates)<br>+ 'not verified against IUCA engine' label"]
+    O -->|"needs clarification"| P["Ask the user a question"]
+    O -->|"cannot express"| X["Explain why it cannot be represented"]
+    R --> H["Human review → copy into the company rule screen"]

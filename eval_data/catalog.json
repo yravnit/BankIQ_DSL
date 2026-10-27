@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.0.0",
+  "source": "IUCA Rule DSL Guide.pdf, dated 30 September 2026",
+  "scope_note": "Curated subset only; absence does not prove the real IUCA engine lacks an item.",
+  "attributes": {
+    "documented_subset": [
+      "txnAmount",
+      "paymentMethod",
+      "payerAccountNumber",
+      "payerBankIfsc",
+      "payeeBankIfsc",
+      "latitude",
+      "longitude",
+      "responseCode",
+      "deviceOs",
+      "xChannelId",
+      "payerVpa",
+      "payeeVpa",
+      "custAccountNumber",
+      "areaName",
+      "stateName",
+      "applicationID",
+      "custCity",
+      "custIncomeRange",
+      "custAccountOpeningTimestamp",
+      "custIfsc",
+      "previousTxnAmount",
+      "merchantMonthlyLimit",
+      "txnType",
+      "payerId",
+      "custVulnerabilityScore"
+    ],
+    "sensitive_excluded_from_v1": [
+      "pan",
+      "aadhar"
+    ],
+    "partner_provisional_unmapped": [
+      "attribute1",
+      "attribute2",
+      "attribute3",
+      "attribute4",
+      "attribute5",
+      "attribute6",
+      "attribute7",
+      "attribute8",
+      "attribute9",
+      "attribute10",
+      "measure1",
+      "measure2",
+      "measure3",
+      "measure4",
+      "measure5",
+      "measure6",
+      "measure7",
+      "measure8",
+      "measure9",
+      "measure10",
+      "time1",
+      "time2",
+      "time3",
+      "time4",
+      "time5",
+      "time6",
+      "time7",
+      "time8",
+      "time9",
+      "time10",
+      "bool1",
+      "bool2",
+      "bool3",
+      "bool4",
+      "bool5",
+      "bool6",
+      "bool7",
+      "bool8",
+      "bool9",
+      "bool10",
+      "merchantAttribute1",
+      "merchantMeasure1",
+      "merchantTime1",
+      "agentAttribute1",
+      "agentMeasure1",
+      "customerAttribute1",
+      "payeeAttribute1"
+    ]
+  },
+  "comparators": [
+    "lesser than",
+    "greater than",
+    "equal to",
+    "not equal to",
+    "lesserThan equal to",
+    "greaterThan equal to",
+    "contains"
+  ],
+  "list_categories": [
+    "Payer Account Number",
+    "Payer VPA",
+    "Device ID",
+    "Payer Bank Ifsc",
+    "Payer Account Ifsc",
+    "Geo Coordinates"
+  ],
+  "list_modes": [
+    "MEMBERSHIP",
+    "COUNT",
+    "AMOUNT"
+  ],
+  "built_in_functions": [
+    "isPayerBankIFSCStartsWith"
+  ],
+  "event_examples": [
+    "mobile_number_change",
+    "pin_change",
+    "kyc_change"
+  ],
+  "history_metrics": [
+    "count",
+    "amount",
+    "refundAmount"
+  ],
+  "history_windows": [
+    "WITHIN",
+    "SAME_DAY",
+    "SAME_MONTH",
+    "AFTER_LAST_DECLINED"
+  ],
+  "rule_shapes": [
+    "CURRENT_TXN",
+    "HISTORY_TXN",
+    "NESTED_CURRENT_AND_HISTORY"
+  ],
+  "string_literal_policy": {
+    "source_constraint": "The PDF says quoted strings cannot contain spaces.",
+    "additional_v1_allowlist": "ASCII letters, digits, underscore, dot, asterisk, and hyphen only.",
+    "pattern": "^[A-Za-z0-9_.*-]+$"
+  }
+}

@@ -1,0 +1,56 @@
+flowchart TD
+    subgraph PRE["0 · Deterministic preflight — iuca_core.py --out-dir (no LLM involved)"]
+        F1["fixtures.py<br>15 golden seeds (PDF §9)<br>11 negative / edge cases"] --> SC["selfcheck.py<br>validate_static_invariants:<br>golden IR valid · 7 negative guards<br>few-shot ≠ evaluation prompts"]
+        F2["catalog.py<br>documented v1 subset"] --> SC
+        R1["renderer.py · render_dsl<br>byte-exact check vs expected_dsl"] --> SC
+        SC --> DS["datasets.py · generate_datasets<br>→ eval_data/ — 54 dev · 17 holdout"]
+        DS -->|"all [OK] gates pass"| MODE
+    end
+
+    MODE{{"run mode"}}
+    MODE -->|"deterministic only — stop"| DONE["fixtures regenerated · core verified"]
+    MODE -->|"benchmark / live"| IN
+
+    subgraph IN["1 · Input"]
+        U["user request<br>plain-language rule"]
+        E["eval case<br>_select_eval_subset (seeded)"]
+    end
+    U --> G
+    E --> G
+    G{"pre-LLM privacy gate<br>(fixture flag today —<br>real detector MISSING)"}
+    G -->|"sensitive identifier<br>e.g. raw PAN"| B["deterministic block:<br>cannot_express — never leaves the machine"]
+    G -->|"pass"| P1
+
+    subgraph ASSEMBLE["2 · Prompt assembly (prompts.py — from catalog only)"]
+        P1["SYSTEM_PROMPT<br>catalog + strict constraints"] --> P2["PROMPT_VARIANTS<br>fewshot · v2 · v3 · v4 · v5 · v6 (default)"]
+    end
+
+    subgraph PROVIDER["3 · Provider adapters (transport only — no rule logic allowed here)"]
+        A1["NIM · iuca_provider_benchmark.py<br>prompt-only JSON (response_format ignored,<br>nvext rejected) · enable_thinking=false"]
+        A2["llama-server · benchmark_llama_server.py<br>json_schema mode · chat_template_kwargs"]
+    end
+    P2 --> A1
+    P2 --> A2
+    A1 --> RESP["model response text"]
+    A2 --> RESP
+
+    subgraph LADDER["4 · Parse & validate ladder (never trust model text)"]
+        L1["parse_json_text<br>exact · extracted · repaired · fail<br>duplicate-key tolerant"] --> L2["AssistantEnvelope.model_validate<br>every key explicit"]
+        L2 --> L3["validate_envelope_consistency<br>→ validate_rule_ir (validator.py):<br>catalog · quoted-string policy · privacy<br>history grouping · windows"]
+    end
+    RESP --> L1
+    L1 -->|"empty / unparseable"| FAIL["counted as model failure<br>invalid_json · schema_invalid · …"]
+    L3 -->|"schema+semantic errors"| FAIL
+    L3 -->|"valid"| O{{"outcome?"}}
+
+    O -->|"ready"| TX["renderer.py · render_dsl<br>fixed templates — model text can never be joined in"]
+    TX --> LAB["candidate DSL + warnings +<br>'Built from documented patterns —<br>not verified against the IUCA engine'"]
+    LAB --> HUMAN["HUMAN REVIEW<br>read-back → copy into company rule screen<br>(company parser = final syntax check)"]
+    O -->|"needs_clarification"| Q["clarification_questions → user"]
+    O -->|"cannot_express"| X["unrepresentable_reason → user"]
+
+    subgraph SCORE["5 · Benchmark scoring & artifacts"]
+        S1["canonical_json_value<br>IR semantic equality, order-insensitive"] --> S2["outcome acc · IR exact · DSL exact<br>unsafe-ready · latency"]
+        S2 --> S3["eval_results/&lt;provider&gt;/&lt;model&gt;/&lt;timestamp&gt;/<br>details.csv · summary.csv · run.json"]
+    end
+    L3 -.-> S1

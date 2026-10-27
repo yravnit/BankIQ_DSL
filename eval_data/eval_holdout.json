@@ -1,0 +1,675 @@
+[
+  {
+    "id": "sec9_01_single_condition_p4",
+    "pattern_id": "sec9_01_single_condition",
+    "pattern": "Single condition",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Rule for current txn where txnAmount > 50000.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where txnAmount greater than 50000)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "ATTRIBUTE_CMP",
+            "attribute": "txnAmount",
+            "comparator": "greater than",
+            "value": {
+              "type": "NUMBER",
+              "value": 50000
+            },
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_02_and_chain_p4",
+    "pattern_id": "sec9_02_and_chain",
+    "pattern": "and chain",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Check current txn: amount greater than 50000 and paymentMethod is P2P.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where txnAmount greater than 50000 and paymentMethod equal to \"P2P\")",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": "and",
+        "conditions": [
+          {
+            "kind": "ATTRIBUTE_CMP",
+            "attribute": "txnAmount",
+            "comparator": "greater than",
+            "value": {
+              "type": "NUMBER",
+              "value": 50000
+            },
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          },
+          {
+            "kind": "ATTRIBUTE_CMP",
+            "attribute": "paymentMethod",
+            "comparator": "equal to",
+            "value": {
+              "type": "STRING",
+              "value": "P2P"
+            },
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_03_or_chain_p4",
+    "pattern_id": "sec9_03_or_chain",
+    "pattern": "or chain",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Check current txn for responseCode == 00 or responseCode == U30.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where responseCode equal to \"00\" or responseCode equal to \"U30\")",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": "or",
+        "conditions": [
+          {
+            "kind": "ATTRIBUTE_CMP",
+            "attribute": "responseCode",
+            "comparator": "equal to",
+            "value": {
+              "type": "STRING",
+              "value": "00"
+            },
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          },
+          {
+            "kind": "ATTRIBUTE_CMP",
+            "attribute": "responseCode",
+            "comparator": "equal to",
+            "value": {
+              "type": "STRING",
+              "value": "U30"
+            },
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_04_list_membership_p4",
+    "pattern_id": "sec9_04_list_membership",
+    "pattern": "List membership",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Match when Payer Account Ifsc belongs to BlockedAccounts and txnAmount is 25000 or more.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where Payer Account Ifsc On \"BlockedAccounts\" equal to true and txnAmount greaterThan equal to 25000)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": "and",
+        "conditions": [
+          {
+            "kind": "LIST_CHECK",
+            "category": "Payer Account Ifsc",
+            "listName": "BlockedAccounts",
+            "mode": "MEMBERSHIP",
+            "comparator": "equal to",
+            "value": {
+              "type": "BOOLEAN",
+              "value": true
+            },
+            "attribute": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          },
+          {
+            "kind": "ATTRIBUTE_CMP",
+            "attribute": "txnAmount",
+            "comparator": "greaterThan equal to",
+            "value": {
+              "type": "NUMBER",
+              "value": 25000
+            },
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_05_list_count_p4",
+    "pattern_id": "sec9_05_list_count",
+    "pattern": "List count",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Trigger if the current transaction's Payer VPA has a count of 3 or more on HighRiskVpa.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where Payer VPA On \"HighRiskVpa\" Count greaterThan equal to 3)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "LIST_CHECK",
+            "category": "Payer VPA",
+            "listName": "HighRiskVpa",
+            "mode": "COUNT",
+            "comparator": "greaterThan equal to",
+            "value": {
+              "type": "NUMBER",
+              "value": 3
+            },
+            "attribute": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_06_list_amount_p4",
+    "pattern_id": "sec9_06_list_amount",
+    "pattern": "List amount",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Trigger when Payer Account Number on WatchList has an accumulated amount > 100000.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where Payer Account Number On \"WatchList\" Amount greater than 100000)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "LIST_CHECK",
+            "category": "Payer Account Number",
+            "listName": "WatchList",
+            "mode": "AMOUNT",
+            "comparator": "greater than",
+            "value": {
+              "type": "NUMBER",
+              "value": 100000
+            },
+            "attribute": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_07_builtin_function_p4",
+    "pattern_id": "sec9_07_builtin_function",
+    "pattern": "Built-in function",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Match current txn if payer bank IFSC begins with HDFC.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where isPayerBankIFSCStartsWith \"HDFC\" equal to true)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "FUNCTION_CALL",
+            "functionName": "isPayerBankIFSCStartsWith",
+            "argument": "HDFC",
+            "comparator": "equal to",
+            "value": {
+              "type": "BOOLEAN",
+              "value": true
+            },
+            "attribute": null,
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_08_multiply_by_number_p4",
+    "pattern_id": "sec9_08_multiply_by_number",
+    "pattern": "Multiply by a number",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Check current txn: txnAmount > 2 Times previousTxnAmount.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where txnAmount greater than 2 Times previousTxnAmount)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "SCALED_CMP",
+            "attribute": "txnAmount",
+            "comparator": "greater than",
+            "multiplier": 2,
+            "scaleUnit": "Times",
+            "target": "previousTxnAmount",
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "eventName": null,
+            "pattern": null,
+            "value": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_09_multiply_by_percentage_p4",
+    "pattern_id": "sec9_09_multiply_by_percentage",
+    "pattern": "Multiply by a percentage",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Trigger when current transaction amount is above 150 percent of merchantMonthlyLimit.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where txnAmount greater than 150 Percentage merchantMonthlyLimit)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "SCALED_CMP",
+            "attribute": "txnAmount",
+            "comparator": "greater than",
+            "multiplier": 150,
+            "scaleUnit": "Percentage",
+            "target": "merchantMonthlyLimit",
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "eventName": null,
+            "pattern": null,
+            "value": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_10_history_simple_count_p4",
+    "pattern_id": "sec9_10_history_simple_count",
+    "pattern": "History, simple count",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Trigger when the number of transactions in a 24 hour window exceeds 5.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Transactions within 24 hours should have count greater than 5)",
+    "expected_ir": {
+      "shape": "HISTORY_TXN",
+      "history": {
+        "window": {
+          "kind": "WITHIN",
+          "value": 24,
+          "unit": "hours"
+        },
+        "filter": null,
+        "grouping": null,
+        "aggregations": {
+          "combinator": null,
+          "checks": [
+            {
+              "metric": "count",
+              "comparator": "greater than",
+              "value": 5
+            }
+          ]
+        }
+      },
+      "current": null
+    }
+  },
+  {
+    "id": "sec9_11_history_two_cumulative_p4",
+    "pattern_id": "sec9_11_history_two_cumulative",
+    "pattern": "History, two cumulative checks",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Trigger when 24-hour transaction volume is over 100000 and count is above 5.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Transactions within 24 hours should have amount greater than 100000 and count greater than 5)",
+    "expected_ir": {
+      "shape": "HISTORY_TXN",
+      "history": {
+        "window": {
+          "kind": "WITHIN",
+          "value": 24,
+          "unit": "hours"
+        },
+        "filter": null,
+        "grouping": null,
+        "aggregations": {
+          "combinator": "and",
+          "checks": [
+            {
+              "metric": "amount",
+              "comparator": "greater than",
+              "value": 100000
+            },
+            {
+              "metric": "count",
+              "comparator": "greater than",
+              "value": 5
+            }
+          ]
+        }
+      },
+      "current": null
+    }
+  },
+  {
+    "id": "sec9_12_history_with_filter_p4",
+    "pattern_id": "sec9_12_history_with_filter",
+    "pattern": "History with filter",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Flag when the same payerId has more than 3 CREDIT transactions in 24 hours.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Transactions within 24 hours where txnType equal to \"CREDIT\" from same payerId should have count greater than 3)",
+    "expected_ir": {
+      "shape": "HISTORY_TXN",
+      "history": {
+        "window": {
+          "kind": "WITHIN",
+          "value": 24,
+          "unit": "hours"
+        },
+        "filter": {
+          "combinator": null,
+          "conditions": [
+            {
+              "kind": "ATTRIBUTE_CMP",
+              "attribute": "txnType",
+              "comparator": "equal to",
+              "value": {
+                "type": "STRING",
+                "value": "CREDIT"
+              },
+              "category": null,
+              "listName": null,
+              "mode": null,
+              "functionName": null,
+              "argument": null,
+              "multiplier": null,
+              "scaleUnit": null,
+              "target": null,
+              "eventName": null,
+              "pattern": null
+            }
+          ]
+        },
+        "grouping": {
+          "direction": "from same",
+          "attribute": "payerId"
+        },
+        "aggregations": {
+          "combinator": null,
+          "checks": [
+            {
+              "metric": "count",
+              "comparator": "greater than",
+              "value": 3
+            }
+          ]
+        }
+      },
+      "current": null
+    }
+  },
+  {
+    "id": "sec9_13_customer_event_count_p4",
+    "pattern_id": "sec9_13_customer_event_count",
+    "pattern": "Customer event count",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Trigger when mobile_number_change event count exceeds 2.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where event mobile_number_change count greater than 2)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "EVENT_COUNT",
+            "eventName": "mobile_number_change",
+            "comparator": "greater than",
+            "value": 2,
+            "attribute": null,
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_14_glob_match_p4",
+    "pattern_id": "sec9_14_glob_match",
+    "pattern": "Glob match",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Match current txn where deviceOs glob matches Android*.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where deviceOs like \"Android*\" equal to true)",
+    "expected_ir": {
+      "shape": "CURRENT_TXN",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "GLOB_MATCH",
+            "attribute": "deviceOs",
+            "pattern": "Android*",
+            "comparator": "equal to",
+            "value": true,
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null
+          }
+        ]
+      },
+      "history": null
+    }
+  },
+  {
+    "id": "sec9_15_nested_shape_c_p4",
+    "pattern_id": "sec9_15_nested_shape_c",
+    "pattern": "Nested (Shape C)",
+    "split": "holdout",
+    "category": "golden_paraphrase",
+    "prompt": "Match if current transaction amount is over 50000 and transaction count within 24 hours is above 3.",
+    "expected_outcome": "ready",
+    "expected_dsl": "(Current transaction where txnAmount greater than 50000) AND (Transactions within 24 hours should have count greater than 3)",
+    "expected_ir": {
+      "shape": "NESTED_CURRENT_AND_HISTORY",
+      "current": {
+        "combinator": null,
+        "conditions": [
+          {
+            "kind": "ATTRIBUTE_CMP",
+            "attribute": "txnAmount",
+            "comparator": "greater than",
+            "value": {
+              "type": "NUMBER",
+              "value": 50000
+            },
+            "category": null,
+            "listName": null,
+            "mode": null,
+            "functionName": null,
+            "argument": null,
+            "multiplier": null,
+            "scaleUnit": null,
+            "target": null,
+            "eventName": null,
+            "pattern": null
+          }
+        ]
+      },
+      "history": {
+        "window": {
+          "kind": "WITHIN",
+          "value": 24,
+          "unit": "hours"
+        },
+        "filter": null,
+        "grouping": null,
+        "aggregations": {
+          "combinator": null,
+          "checks": [
+            {
+              "metric": "count",
+              "comparator": "greater than",
+              "value": 3
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "neg_vague_04_partner_slot",
+    "category": "partner_provisional_slot",
+    "expected_outcome": "needs_clarification",
+    "prompt": "Current transaction where attribute1 greater than 500.",
+    "expected_reason": "Generic slot attribute1 is partner-configurable and unmapped by default.",
+    "pattern_id": "partner_provisional_slot",
+    "pattern": "partner_provisional_slot",
+    "split": "holdout",
+    "expected_dsl": null,
+    "expected_ir": null
+  },
+  {
+    "id": "neg_syntax_04_cross_attribute_math",
+    "category": "unrepresentable_math",
+    "expected_outcome": "cannot_express",
+    "prompt": "Current transaction where txnAmount plus custVulnerabilityScore greater than 10000.",
+    "expected_reason": "Addition/subtraction across attributes is not supported in the DSL.",
+    "pattern_id": "unrepresentable_math",
+    "pattern": "unrepresentable_math",
+    "split": "holdout",
+    "expected_dsl": null,
+    "expected_ir": null
+  }
+]

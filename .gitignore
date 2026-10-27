@@ -1,0 +1,26 @@
+# Python runtime artifacts
+__pycache__/
+*.pyc
+
+# Virtual environments / tool caches
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets are read from an external .env path (rules.md §4); never commit any here
+.env
+*.env
+
+# Provider run artifacts: committing requires user approval (rules.md §8)
+eval_results/
+
+# Internal company document — out of git unless explicitly approved (rules.md §10, #6)
+IUCA Rule DSL Guide.pdf
+
+# Editor / OS noise
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
